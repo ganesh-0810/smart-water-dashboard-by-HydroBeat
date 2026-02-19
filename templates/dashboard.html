@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Water Monitoring Dashboard</title>
+    <style>
+        body { font-family: Arial; background: #f4f6f9; text-align: center; }
+        .card {
+            display: inline-block;
+            margin: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+            width: 220px;
+        }
+        .normal { color: green; }
+        .warning { color: orange; }
+        .critical { color: red; }
+    </style>
+</head>
+<body>
+
+<h2>Solapur Municipal Water Monitoring Dashboard</h2>
+
+<div id="zones"></div>
+
+<script>
+async function fetchData() {
+    const response = await fetch('/data');
+    const data = await response.json();
+
+    let html = "";
+    data.forEach(zone => {
+        let statusClass = zone.status.toLowerCase();
+        html += `
+        <div class="card">
+            <h3>${zone.zone}</h3>
+            <p>Pressure: ${zone.pressure} bar</p>
+            <p>Flow: ${zone.flow} L/min</p>
+            <p class="${statusClass}">Status: ${zone.status}</p>
+        </div>
+        `;
+    });
+
+    document.getElementById("zones").innerHTML = html;
+}
+
+setInterval(fetchData, 3000);
+fetchData();
+</script>
+
+</body>
+</html>
