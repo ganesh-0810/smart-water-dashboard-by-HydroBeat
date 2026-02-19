@@ -97,6 +97,6 @@ It improves supply reliability without large-scale infrastructure modification.
 
 ---
 
-## 🚀 How to Run the Project Locally
+##  How to Run the Project Locally
 
 1. Clone the repository:
