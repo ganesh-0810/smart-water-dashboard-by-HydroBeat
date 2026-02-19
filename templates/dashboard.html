@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Smart Water Monitoring Dashboard</title>
+    <title>Smart Water Command Center</title>
     <style>
-        body { font-family: Arial; background: #f4f6f9; text-align: center; }
-        .card {
-            display: inline-block;
-            margin: 15px;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
-            width: 220px;
-        }
-        .normal { color: green; }
-        .warning { color: orange; }
-        .critical { color: red; }
+        body { font-family: Arial; background:#eef2f7; margin:0; padding:20px;}
+        h1 { text-align:center; }
+        .summary { display:flex; justify-content:space-around; margin-bottom:20px; }
+        .summary div { background:white; padding:15px; border-radius:8px; width:22%; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+        .alert-banner { background:red; color:white; padding:10px; text-align:center; margin-bottom:15px; display:none;}
+        .zone-card { background:white; padding:15px; margin:10px; border-radius:8px; display:inline-block; width:300px; vertical-align:top; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+        .normal { border-left:6px solid green; }
+        .warning { border-left:6px solid orange; }
+        .critical { border-left:6px solid red; }
+        .section { font-size:14px; margin:4px 0;}
     </style>
 </head>
 <body>
 
-<h2>Solapur Municipal Water Monitoring Dashboard</h2>
+<h1>Solapur Municipal Corporation (SMC)</h1>
+
+<div class="alert-banner" id="alertBanner"></div>
+
+<div class="summary">
+    <div>Total Zones<br><b id="totalZones"></b></div>
+    <div>Total Water Today (KL)<br><b id="totalWater"></b></div>
+    <div>Critical Zones<br><b id="criticalCount"></b></div>
+    <div>Active Alerts<br><b id="alertCount"></b></div>
+</div>
 
 <div id="zones"></div>
 
@@ -29,15 +35,33 @@ async function fetchData() {
     const response = await fetch('/data');
     const data = await response.json();
 
+    document.getElementById("totalZones").innerText = data.total_zones;
+    document.getElementById("totalWater").innerText = data.total_water_today;
+    document.getElementById("criticalCount").innerText = data.critical_count;
+    document.getElementById("alertCount").innerText = data.alerts.length;
+
+    let alertBanner = document.getElementById("alertBanner");
+    if(data.alerts.length > 0){
+        alertBanner.style.display = "block";
+        alertBanner.innerText = "⚠ ALERT: " + data.alerts.join(" | ");
+    } else {
+        alertBanner.style.display = "none";
+    }
+
     let html = "";
-    data.forEach(zone => {
+    data.zones.forEach(zone => {
         let statusClass = zone.status.toLowerCase();
         html += `
-        <div class="card">
-            <h3>${zone.zone}</h3>
-            <p>Pressure: ${zone.pressure} bar</p>
-            <p>Flow: ${zone.flow} L/min</p>
-            <p class="${statusClass}">Status: ${zone.status}</p>
+        <div class="zone-card ${statusClass}">
+            <h3>${zone.zone} - ${zone.area}</h3>
+            <div class="section">Elevation: ${zone.elevation}</div>
+            <div class="section">Pressure: ${zone.pressure} bar (${zone.status})</div>
+            <div class="section">Flow Rate: ${zone.flow} L/min</div>
+            <div class="section">Consumption: ${zone.consumption_hour} L/hr</div>
+            <div class="section">Today's Use: ${zone.daily_kl} KL</div>
+            <div class="section">Leak Detected: ${zone.leak}</div>
+            <div class="section">Worker Assigned: ${zone.worker}</div>
+            <div class="section">Worker Status: ${zone.worker_status}</div>
         </div>
         `;
     });
