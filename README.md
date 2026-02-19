@@ -5,7 +5,7 @@ A real-time, zone-based smart water monitoring and pressure management system de
 
 ---
 
-## 🚩 Problem Statement
+##  Problem Statement
 
 Urban water distribution systems face:
 
@@ -20,7 +20,7 @@ These challenges lead to inequality in water access and increased operational bu
 
 ---
 
-## 💡 Proposed Solution
+##  Proposed Solution
 
 HydroBeat introduces an intelligent, modular water pressure management system that:
 
@@ -35,16 +35,16 @@ This solution enhances the existing infrastructure without replacing it.
 
 ---
 
-## ⚙️ System Architecture
+##  System Architecture
 
-### 1️⃣ Mechanical & Hydraulic Design
+###  Mechanical & Hydraulic Design
 - Gravity-fed reservoir supply
 - In-pipe micro turbine for energy harvesting
 - Break tanks placed at elevation points
 - Pressure-assisted booster pumps
 - Smart flow divider at ¾ downhill point
 
-### 2️⃣ Smart Monitoring (DMA-Based)
+###  Smart Monitoring (DMA-Based)
 - Zone-wise pressure sensors
 - Flow meters at distribution points
 - Real-time monitoring of:
@@ -52,7 +52,7 @@ This solution enhances the existing infrastructure without replacing it.
   - Flow imbalance
   - Sudden drops (leak detection)
 
-### 3️⃣ Central Command Dashboard
+###  Central Command Dashboard
 - Live zone-wise pressure readings
 - Flow rate monitoring
 - Status classification (Normal / Warning / Critical)
@@ -61,7 +61,7 @@ This solution enhances the existing infrastructure without replacing it.
 
 ---
 
-## 🖥️ Dashboard Features
+##  Dashboard Features
 
 - Real-time pressure display (in bar)
 - Real-time flow rate monitoring (L/min)
@@ -72,7 +72,7 @@ This solution enhances the existing infrastructure without replacing it.
 
 ---
 
-## 🏗️ Break Tank Concept
+##  Break Tank Concept
 
 The break tank is a compact mid-elevation pressure-balancing structure that:
 
@@ -86,7 +86,7 @@ It improves supply reliability without large-scale infrastructure modification.
 
 ---
 
-## 📊 Technology Stack
+##  Technology Stack
 
 - Python
 - Flask (Backend)
